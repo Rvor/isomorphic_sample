@@ -42,7 +42,7 @@ export const client = {
   ]
 };
 
-export consts server = {
+export const server = {
   name: 'server',
   target: 'node',
   context: CLIENT_DIR,

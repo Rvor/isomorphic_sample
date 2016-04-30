@@ -6,6 +6,22 @@ const PORT = 8080;
 const HOST = 'localhost';
 const HOST_URI = `http://${HOST}:${PORT}`;
 
+const statOptions = {
+  colors: true,
+  hash: false,
+  timings: false,
+  chunks: false,
+  chunkModules: false,
+  modules: false,
+  children: true,
+  version: true,
+  cached: false,
+  cachedAssets: false,
+  reasons: false,
+  source: false,
+  errorDetails: false
+};
+
 const devConfig = Object.assign({}, config.client, {
   name: 'dev-server',
   entry: [
@@ -21,6 +37,7 @@ const devConfig = Object.assign({}, config.client, {
       {
         test: /\.js$/,
         include: config.CLIENT_DIR,
+        exclude: /node_modules/,
         loader: 'react-hot-loader!babel-loader'
       },
       {
@@ -35,10 +52,16 @@ const devConfig = Object.assign({}, config.client, {
 });
 
 const devServer = new WebpackDevServer(webpack(devConfig), {
-  hot: true
+  hot: true,
+  stats: statOptions
 });
 
 devServer.listen(PORT, HOST, function(err){
   if (err) throw err;
   console.log(`Webpack server listening at ${HOST_URI}`);
+});
+
+webpack(config.server).watch({}, (err, stats) => {
+  if (err) return console.error(err.message);
+  console.log(stats.toString(statOptions));
 });
