@@ -4,7 +4,8 @@
   "description": "Isomorphic: react, redux, express, babel, and more",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-dev": "NODE_ENV=development nodemon --exec babel-node src/index.js -e js,handlebars",
+    "webpack-dev": "babel-node webpack.development.js"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Rvor/07_isomorphic/issues"
-  },
-  "scripts": {
-    "start-dev": "NODE_ENV=development nodemon --exec babel-node src/index.js -e js,handlebars",
-    "webpack-dev": "babel-node webpack.development.js"
   },
   "homepage": "https://github.com/Rvor/07_isomorphic#readme",
   "devDependencies": {
@@ -48,6 +45,7 @@
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "react-redux": "^4.4.5",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "socket.io": "^1.4.5"
   }
 }

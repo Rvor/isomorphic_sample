@@ -4,8 +4,51 @@ html {
 }
 #app {
   background-color: white;
+  box-shadow: 0 0 8px #dedede;
   margin: 0 auto;
   max-width: 600px;
   padding: 20px;
   text-align: center;
+}
+.messge-list {
+  height: 240px;
+  list-style: none;
+  margin: 0;
+  overflow: auto;
+  padding: 10px;
+}
+.messge-list .message-item {
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 0;
+}
+.messge-list .message {
+  background-color: rbga(34, 114, 234, 0.4);
+  border-radius: 8px;
+  box-sizing: border-box;
+  float: right;
+  font-size: 14px;
+  margin: 0;
+  max-width: 90%;
+  padding: 8px;
+}
+.messge-list .message.is-response {
+  background-color: rbga(12, 234, 88, 0.4);
+  float: left;
+}
+.message-entry-box {
+  background-color: #dedede;
+  padding: 10px;
+}
+.message-entry-box textarea {
+  border: none;
+  box-sizing: border-box;
+  font-size: 14px;
+  height: 60px;
+  margin: 0px;
+  padding: 4px;
+  width: 100%;
+}
+.message-entry-box textarea:focus {
+  outline: none;
 }

@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+import {} from './style.less';
+
 
 class MessageList extends Component {
   render() {
     return (
-      <ul className='message-list'>
+      <ol className='message-list'>
         { this.props.messages.map((message, index) => {
+          const messageClass = message.userid != this.props.userId ? 'is-response' : '';
           return (
-            <li key={`message-${index}`}>
-              { message.text }
+            <li key={`message-${index}`} className='message-item'>
+              <p className={`message ${messageClass}`}>
+                { message.text }
+              </p>
             </li>
           );
         })}
-      </ul>
+      </ol>
     );
   }
 }

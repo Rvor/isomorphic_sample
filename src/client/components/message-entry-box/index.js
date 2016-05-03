@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {} from './style.less';
 
 class MessageEntryBox extends Component {
   render() {
@@ -6,6 +7,7 @@ class MessageEntryBox extends Component {
       <div className='message-entry-box'>
         <textarea 
           name='message'
+          placeholder='Enter a message ...'
           value={this.props.value}
           onChange={this.handleChange.bind(this)}
           onKeyPress={this.handleKeyPress.bind(this)}/>
@@ -19,7 +21,15 @@ class MessageEntryBox extends Component {
 
   handleKeyPress(event) {
     if (event.which === 13) {
-      this.props.onSubmit();
+      const trimmedMessage = this.props.value.trim();
+
+      if (trimmedMessage) {
+        this.props.onSubmit({
+          text: trimmedMessage,
+          userId: this.props.userId
+        });
+      }
+      
       event.preventDefault();
     }
   }

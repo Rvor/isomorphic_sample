@@ -67,11 +67,11 @@ module.exports =
 
 	var _messageList2 = _interopRequireDefault(_messageList);
 
-	var _messageEntryBox = __webpack_require__(9);
+	var _messageEntryBox = __webpack_require__(11);
 
 	var _messageEntryBox2 = _interopRequireDefault(_messageEntryBox);
 
-	var _messageActions = __webpack_require__(10);
+	var _messageActions = __webpack_require__(14);
 
 	var messageActionCreators = _interopRequireWildcard(_messageActions);
 
@@ -105,9 +105,10 @@ module.exports =
 	          null,
 	          'Chat application'
 	        ),
-	        _react2.default.createElement(_messageList2.default, { messages: this.props.messages }),
+	        _react2.default.createElement(_messageList2.default, { userId: this.props.userId, messages: this.props.messages }),
 	        _react2.default.createElement(_messageEntryBox2.default, {
 	          value: this.props.currentMessage,
+	          userId: this.props.userId,
 	          onChange: this.props.updateMessage,
 	          onSubmit: this.props.addMessage })
 	      );
@@ -119,6 +120,7 @@ module.exports =
 
 	function mapStateToProps(state) {
 	  return {
+	    userId: state.userId,
 	    messages: state.messages,
 	    currentMessage: state.currentMessage
 	  };
@@ -173,6 +175,8 @@ module.exports =
 
 	var _react2 = _interopRequireDefault(_react);
 
+	__webpack_require__(9);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -193,14 +197,21 @@ module.exports =
 	  _createClass(MessageList, [{
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
-	        'ul',
+	        'ol',
 	        { className: 'message-list' },
 	        this.props.messages.map(function (message, index) {
+	          var messageClass = message.userid != _this2.props.userId ? 'is-response' : '';
 	          return _react2.default.createElement(
 	            'li',
-	            { key: 'message-' + index },
-	            message.text
+	            { key: 'message-' + index, className: 'message-item' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'message ' + messageClass },
+	              message.text
+	            )
 	          );
 	        })
 	      );
@@ -214,6 +225,13 @@ module.exports =
 
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 10 */,
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -227,6 +245,8 @@ module.exports =
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(12);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -253,6 +273,7 @@ module.exports =
 	        { className: 'message-entry-box' },
 	        _react2.default.createElement('textarea', {
 	          name: 'message',
+	          placeholder: 'Enter a message ...',
 	          value: this.props.value,
 	          onChange: this.handleChange.bind(this),
 	          onKeyPress: this.handleKeyPress.bind(this) })
@@ -267,7 +288,15 @@ module.exports =
 	    key: 'handleKeyPress',
 	    value: function handleKeyPress(event) {
 	      if (event.which === 13) {
-	        this.props.onSubmit();
+	        var trimmedMessage = this.props.value.trim();
+
+	        if (trimmedMessage) {
+	          this.props.onSubmit({
+	            text: trimmedMessage,
+	            userId: this.props.userId
+	          });
+	        }
+
 	        event.preventDefault();
 	      }
 	    }
@@ -279,7 +308,14 @@ module.exports =
 	exports.default = MessageEntryBox;
 
 /***/ },
-/* 10 */
+/* 12 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 13 */,
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -289,8 +325,12 @@ module.exports =
 	});
 	exports.updateMessage = updateMessage;
 	exports.addMessage = addMessage;
+	exports.addResponse = addResponse;
+	exports.setUserId = setUserId;
 	var UPDATE_MESSAGE = exports.UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 	var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
+	var ADD_RESPONSE = exports.ADD_RESPONSE = 'ADD_RESPONSE';
+	var SET_USET_ID = exports.SET_USET_ID = 'SET_USET_ID';
 
 	function updateMessage(message) {
 	  return {
@@ -299,9 +339,24 @@ module.exports =
 	  };
 	}
 
-	function addMessage() {
+	function addMessage(message) {
 	  return {
-	    type: ADD_MESSAGE
+	    type: ADD_MESSAGE,
+	    message: message
+	  };
+	}
+
+	function addResponse(message) {
+	  return {
+	    type: ADD_RESPONSE,
+	    message: message
+	  };
+	}
+
+	function setUserId(userId) {
+	  return {
+	    type: SET_USET_ID,
+	    userId: userId
 	  };
 	}
 
